@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,9 +20,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
-        /* Estilos base */
         body { margin: 0; padding: 0; background-color: #030712; color: #d1d5db; }
-        /* Esconder scrollbar na navegação mobile */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -33,7 +32,7 @@
         const { useState, useEffect, useRef } = React;
 
         // --- SERVIÇO DE IA (GEMINI API) ---
-        const apiKey = ""; // Insira sua chave da API do Google Gemini aqui
+        const apiKey = ""; 
 
         const callGeminiAPI = async (promptText) => {
             if (!apiKey) return "Modo offline simulado. A chave da API não está configurada no código.";
@@ -43,7 +42,7 @@
                     contents: [{ parts: [{ text: promptText }] }],
                     systemInstruction: { 
                         parts: [{ 
-                            text: "Você é o 'Nexus', um assistente avançado de IA especializado em cibersegurança (Pentest e SOC) dentro de uma plataforma gamificada. Dê respostas concisas, técnicas e didáticas. Explique vulnerabilidades do OWASP Top 10, sugira comandos de terminal (Nmap, SQLmap, mitigação de firewall) e ajude o analista a subir de nível. Fale em português." 
+                            text: "Você é o 'Nexus', um assistente avançado de IA especializado em cibersegurança (Pentest e SOC) dentro de uma plataforma gamificada. Dê respostas concisas, técnicas e didáticas. Explique vulnerabilidades do OWASP Top 10. Fale em português de Portugal." 
                         }] 
                     }
                 };
@@ -62,15 +61,13 @@
             }
         };
 
-        // --- DADOS MOCKADOS ---
         const MISSIONS = [
-            { id: 1, title: "Injeção de SQL (SQLi)", type: "Offensive", diff: "Iniciante", owasp: "A03:2021", points: 100, desc: "Explore o painel de login de um banco desatualizado para extrair a tabela de usuários." },
-            { id: 2, title: "Broken Authentication", type: "Offensive", diff: "Iniciante", owasp: "A07:2021", points: 100, desc: "Execute um ataque de força bruta usando senhas vazadas em um portal administrativo." },
+            { id: 1, title: "Injeção de SQL (SQLi)", type: "Offensive", diff: "Iniciante", owasp: "A03:2021", points: 100, desc: "Explore o painel de login de um banco desatualizado para extrair a tabela de utilizadores." },
+            { id: 2, title: "Broken Authentication", type: "Offensive", diff: "Iniciante", owasp: "A07:2021", points: 100, desc: "Execute um ataque de força bruta usando senhas vazadas num portal administrativo." },
             { id: 3, title: "Mitigação de DDoS e WAF", type: "Defensive", diff: "Intermediário", owasp: "A05:2021", points: 150, desc: "Configure regras no Web Application Firewall para bloquear tráfego malicioso." },
             { id: 4, title: "Cross-Site Scripting (XSS)", type: "Offensive", diff: "Intermediário", owasp: "A03:2021", points: 150, desc: "Vazar cookies de sessão explorando um campo de comentários não sanitizado." }
         ];
 
-        // --- COMPONENTE PRINCIPAL ---
         function CyberSecApp() {
             const [activeTab, setActiveTab] = useState('dashboard');
             const [playerInfo, setPlayerInfo] = useState({ score: 0, level: 1, rank: 'Script Kiddie' });
@@ -93,7 +90,6 @@
 
             return (
                 <div className="flex flex-col md:flex-row h-screen bg-gray-950 text-gray-300 font-mono overflow-hidden">
-                    {/* SIDEBAR RESPONSIVA */}
                     <aside className="w-full md:w-64 bg-gray-900 border-b md:border-b-0 md:border-r border-green-900/30 flex flex-col shrink-0">
                         <div className="p-4 border-b border-green-900/30 hidden md:block">
                             <h1 className="text-xl font-bold text-green-500 flex items-center gap-2">
@@ -101,7 +97,6 @@
                             </h1>
                         </div>
                         
-                        {/* Navegação - Scroll horizontal no mobile */}
                         <nav className="flex md:flex-col overflow-x-auto no-scrollbar p-2 md:p-4 gap-2 flex-1 items-center md:items-stretch">
                             <NavButton icon="fa-columns" label="Dashboard" active={activeTab === 'dashboard'} onClick={() => setActiveTab('dashboard')} />
                             <NavButton icon="fa-terminal" label="Terminal" active={activeTab === 'terminal'} onClick={() => setActiveTab('terminal')} />
@@ -110,7 +105,6 @@
                             <NavButton icon="fa-robot" label="Nexus AI" active={activeTab === 'ai'} onClick={() => setActiveTab('ai')} />
                         </nav>
 
-                        {/* Perfil (Escondido no mobile para poupar espaço) */}
                         <div className="p-4 bg-gray-900 border-t border-green-900/30 hidden md:block">
                             <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-full bg-green-900/50 flex items-center justify-center border border-green-500/50 text-green-400 font-bold">
@@ -125,7 +119,6 @@
                         </div>
                     </aside>
 
-                    {/* MAIN CONTENT */}
                     <main className="flex-1 flex flex-col h-[calc(100vh-60px)] md:h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-900 via-gray-950 to-black overflow-hidden">
                         {activeTab === 'dashboard' && <Dashboard playerInfo={playerInfo} />}
                         {activeTab === 'terminal' && <TerminalInterface addScore={addScore} />}
@@ -136,8 +129,6 @@
                 </div>
             );
         }
-
-        // --- SUB-COMPONENTES ---
 
         function NavButton({ icon, label, active, onClick }) {
             return (
@@ -161,7 +152,7 @@
                 <div className="p-4 md:p-8 overflow-y-auto h-full">
                     <header className="mb-6 md:mb-8">
                         <h2 className="text-xl md:text-2xl font-bold text-white">Quartel General</h2>
-                        <p className="text-gray-400 text-xs md:text-sm mt-1">Visão geral do seu treinamento (Mobile-friendly).</p>
+                        <p className="text-gray-400 text-xs md:text-sm mt-1">Visão geral do seu treino.</p>
                     </header>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-8">
@@ -177,7 +168,7 @@
                             <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                                 <i className="fas fa-bullseye text-sm"></i> Próximo Objetivo
                             </h3>
-                            <p className="text-sm text-gray-300 mb-4 z-10 relative">Sua primeira missão está aguardando. Navegue até o Terminal e execute seu primeiro scan.</p>
+                            <p className="text-sm text-gray-300 mb-4 z-10 relative">A sua primeira missão aguarda. Navegue até ao Terminal e execute o seu primeiro reconhecimento.</p>
                             <div className="bg-black/50 p-4 rounded-lg font-mono text-sm text-green-400 border border-green-900/30 overflow-x-auto">
                                 $ nmap -sV target.local
                             </div>
@@ -202,12 +193,12 @@
             );
         }
 
-        // --- TERMINAL SIMULATOR ---
+        // --- TERMINAL SIMULATOR (ATUALIZADO) ---
         function TerminalInterface({ addScore }) {
             const [history, setHistory] = useState([
                 { type: 'system', content: 'Iniciando Kernel Hacking OS v1.0.4...' },
                 { type: 'system', content: 'Conexão segura estabelecida.' },
-                { type: 'info', content: 'Digite "help" para comandos disponíveis.' },
+                { type: 'info', content: 'Escreva "help" para ver os comandos disponíveis.' },
             ]);
             const [input, setInput] = useState('');
             const endRef = useRef(null);
@@ -221,7 +212,8 @@
                 if (!input.trim()) return;
 
                 const cmd = input.trim();
-                const args = cmd.split(' ');
+                // Separa os argumentos ignorando espaços a mais
+                const args = cmd.split(/\s+/);
                 const baseCmd = args[0].toLowerCase();
 
                 setHistory(prev => [...prev, { type: 'input', content: `$ ${cmd}` }]);
@@ -231,64 +223,73 @@
                 switch(baseCmd) {
                     case 'help':
                         response = [
-                            { type: 'info', content: 'Comandos:' },
+                            { type: 'info', content: 'Comandos simulados disponíveis:' },
                             { type: 'info', content: '  clear    - Limpa o terminal' },
-                            { type: 'info', content: '  scan     - Varredura (ex: scan target.local)' },
-                            { type: 'info', content: '  exploit  - Atacar (ex: exploit sqli)' },
-                            { type: 'info', content: '  mitigate - Corrigir (ex: mitigate sqli)' },
-                            { type: 'info', content: '  ask_ai   - Ajuda IA (ex: ask_ai o que é nmap)' },
+                            { type: 'info', content: '  nmap     - Varredura de rede (ex: nmap -sV target.local)' },
+                            { type: 'info', content: '  sqlmap   - Exploração de BD (ex: sqlmap -u target.local/login)' },
+                            { type: 'info', content: '  patch    - Aplica correções (ex: patch sqli)' },
+                            { type: 'info', content: '  ask_ai   - Pede ajuda à IA (ex: ask_ai como mitigar XSS?)' },
                         ];
                         break;
                     case 'clear':
                         setHistory([]); return;
-                    case 'scan':
-                        const target = args[1] || 'unknown';
-                        if (target === 'target.local') {
+                    case 'nmap':
+                        // Encontra o alvo ignorando flags (ex: -sV, -p)
+                        const nmapTarget = args.find(arg => arg !== 'nmap' && !arg.startsWith('-')) || 'unknown';
+                        if (nmapTarget === 'target.local') {
                             response = [
-                                { type: 'system', content: `Iniciando Nmap 7.93 em ${target}...` },
-                                { type: 'info', content: 'Porta 80/tcp aberta (http)' },
-                                { type: 'warning', content: '[!] Possível SQLi no /login' },
+                                { type: 'system', content: `Iniciando Nmap 7.93 em ${nmapTarget}...` },
+                                { type: 'system', content: 'Descobrindo portas abertas...' },
+                                { type: 'info', content: 'Porta 80/tcp aberta (http - Apache 2.4.49)' },
+                                { type: 'info', content: 'Porta 3306/tcp aberta (mysql)' },
+                                { type: 'warning', content: '[!] Possível vulnerabilidade SQLi no endpoint /login' },
+                                { type: 'info', content: 'Dica: Use "sqlmap -u target.local/login" para testar a vulnerabilidade.' }
                             ];
-                            addScore(10);
+                            addScore(15);
                         } else {
-                            response = [{ type: 'error', content: `Alvo '${target}' inalcançável.` }];
+                            response = [{ type: 'error', content: `Alvo '${nmapTarget}' não encontrado. Tente 'target.local'.` }];
                         }
                         break;
-                    case 'exploit':
-                        if (args[1] === 'sqli') {
+                    case 'sqlmap':
+                        const sqlTarget = args.find(arg => arg.includes('target.local'));
+                        if (sqlTarget) {
                             response = [
-                                { type: 'warning', content: 'Injetando payload...' },
+                                { type: 'system', content: `Iniciando SQLMap no alvo ${sqlTarget}...` },
+                                { type: 'warning', content: 'Injetando payload: \' OR 1=1 --' },
+                                { type: 'success', content: 'Vulnerabilidade confirmada! Bypass de autenticação bem-sucedido.' },
                                 { type: 'success', content: 'Acesso Admin Concedido! (+50 XP)' },
+                                { type: 'info', content: 'Dica: Use "patch sqli" para corrigir esta falha no servidor.' }
                             ];
                             addScore(50);
                         } else {
-                            response = [{ type: 'error', content: 'Uso: exploit sqli' }];
+                            response = [{ type: 'error', content: 'Alvo inválido. Uso: sqlmap -u target.local/login' }];
                         }
                         break;
-                    case 'mitigate':
+                    case 'patch':
                         if (args[1] === 'sqli') {
                             response = [
-                                { type: 'system', content: 'Aplicando Prepared Statements...' },
-                                { type: 'success', content: 'Vulnerabilidade corrigida! (+50 XP)' },
+                                { type: 'system', content: 'A aplicar Prepared Statements (Consultas Parametrizadas)...' },
+                                { type: 'system', content: 'Reiniciando serviço web...' },
+                                { type: 'success', content: 'Vulnerabilidade SQL Injection corrigida com sucesso! (+50 XP)' },
                             ];
                             addScore(50);
                         } else {
-                            response = [{ type: 'error', content: 'Uso: mitigate sqli' }];
+                            response = [{ type: 'error', content: 'Vulnerabilidade desconhecida. Uso: patch sqli' }];
                         }
                         break;
                     case 'ask_ai':
                         const question = args.slice(1).join(' ');
                         if (!question) {
-                            response = [{ type: 'error', content: 'Faça uma pergunta.' }];
+                            response = [{ type: 'error', content: 'Faça uma pergunta. Ex: ask_ai o que é XSS?' }];
                         } else {
-                            setHistory(prev => [...prev, { type: 'system', content: 'Analisando...' }]);
+                            setHistory(prev => [...prev, { type: 'system', content: 'A analisar a consulta...' }]);
                             const aiReply = await callGeminiAPI(question);
                             setHistory(prev => [...prev, { type: 'ai', content: `Nexus: ${aiReply}` }]);
                             return; 
                         }
                         break;
                     default:
-                        response = [{ type: 'error', content: `Comando não encontrado: ${baseCmd}` }];
+                        response = [{ type: 'error', content: `Comando não reconhecido: ${baseCmd}. Escreva 'help' para ajuda.` }];
                 }
                 setHistory(prev => [...prev, ...response]);
             };
@@ -334,7 +335,7 @@
             useEffect(() => {
                 const interval = setInterval(() => {
                     const types = ['HIGH', 'MEDIUM', 'CRITICAL'];
-                    const attacks = ['Tentativa SQLi', 'Scanner Nmap', 'Tráfego Anômalo', 'Upload Malicioso'];
+                    const attacks = ['Tentativa SQLi', 'Scanner Nmap', 'Tráfego Anómalo', 'Upload Malicioso'];
                     
                     const newAlert = {
                         id: Date.now(),
@@ -403,7 +404,6 @@
             );
         }
 
-        // --- MISSIONS ---
         function MissionsList() {
             return (
                 <div className="p-4 md:p-8 h-full overflow-y-auto">
@@ -440,7 +440,6 @@
             );
         }
 
-        // --- AI ASSISTANT ---
         function AIAssistant() {
             const [messages, setMessages] = useState([
                 { role: 'ai', text: 'Olá Operador. Sou o Nexus. Como posso ajudar nas suas operações de segurança hoje?' }
@@ -511,10 +510,10 @@
             );
         }
 
-        // Renderiza o App React na div #root
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<CyberSecApp />);
     </script>
 </body>
 </html>
+
 
